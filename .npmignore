@@ -18,5 +18,12 @@ node_modules
 *.sublime-project
 *.sublime-workspace
 
-# GIT extras
-/lib
+# NPM extras
+/.babelrc
+/docs
+/src
+/tools
+/test
+/ROADMAP.md
+/.travis.yml
+/.npmignore
