@@ -12,11 +12,14 @@ $ npm install --save sense-hat
 
 ## Usage
 
-### LEDs
+[[[./src/leds.js]]]
 
-#### Pixel read/write
 
-##### setPixel()
+## Related
+
+* [teuteuguy/raspberry-sensor-sense-hat](https://github.com/teuteuguy/raspberry-sensor-sense-hat)
+
+* [jhinrichsen/sense-hat-matrix](https://github.com/jhinrichsen/sense-hat-matrix)
 
 
 ## MIT license

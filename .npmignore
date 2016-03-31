@@ -1,29 +1,30 @@
-# Logs
+# GIT-NPM common
+# --------------
+# All projects
 logs
 *.log
 npm-debug.log*
-
-# Runtime data
 pids
 *.pid
 *.seed
-
-# Dependency directory
 node_modules
-
-# Others
 /coverage
-.nyc_output
-.nyc_tmp
+/.nyc_output
+/.nyc_tmp
 *.sublime-project
 *.sublime-workspace
 
-# NPM extras
-/.babelrc
-/docs
+# Project-specific
+
+
+# NPM-specific
+# ------------
+# All projects
+/docs/templates
 /src
 /tools
 /test
+/package.coffee
 /ROADMAP.md
 /.travis.yml
 /.npmignore

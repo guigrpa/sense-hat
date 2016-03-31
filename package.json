@@ -2,52 +2,69 @@
   "name": "sense-hat",
   "version": "0.1.0",
   "description": "Control the Sense HAT add-on for the Raspberry Pi, in JavaScript!",
-  "main": "lib/sense-hat.js",
-  "scripts": {
-    "flow": "flow; test $? -eq 0 -o $? -eq 2",
-    "flowStop": "flow stop",
-    "lint": "eslint src/sense-hat.js",
-    "compile": "rm -rf ./lib && mkdir lib && babel -o lib/sense-hat.js src/sense-hat.js && babel --no-babelrc --plugins transform-flow-strip-types -o lib/sense-hat_es6.js src/sense-hat.js && cp src/sense-hat.js lib/sense-hat_es6_flow.js",
-    "docs": "coffee tools/extractDocs.coffee",
-    "build": "npm run lint && npm run flow && npm run compile && npm run docs"
-  },
-  "dependencies": {},
-  "devDependencies": {
-    "babel-cli": "^6.6.5",
-    "babel-core": "^6.7.2",
-    "babel-eslint": "^5.0.0",
-    "babel-plugin-transform-flow-strip-types": "^6.7.0",
-    "babel-preset-es2015": "^6.6.0",
-    "babel-preset-stage-2": "^6.5.0",
-    "chalk": "^1.1.3",
-    "coffee-script": "1.10.0",
-    "eslint": "^2.4.0",
-    "eslint-config-airbnb": "^6.2.0",
-    "eslint-plugin-flowtype": "^2.2.2",
-    "flow-bin": "^0.22.1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/guigrpa/sense-hat.git"
-  },
+  "main": "lib/es5/index.js",
+  "author": "Guillermo Grau Panea",
+  "license": "MIT",
   "keywords": [
     "raspberry",
     "pi",
     "sense",
     "HAT",
-    "gpio",
-    "leds",
+    "GPIO",
+    "LEDs",
     "matrix",
     "accelerometer",
     "gyroscope",
+    "IMU",
     "sensors",
     "humidity",
     "temperature"
   ],
-  "author": "Guillermo Grau Panea",
-  "license": "MIT",
+  "homepage": "https://github.com/guigrpa/sense-hat#readme",
   "bugs": {
     "url": "https://github.com/guigrpa/sense-hat/issues"
   },
-  "homepage": "https://github.com/guigrpa/sense-hat#readme"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/guigrpa/sense-hat.git"
+  },
+  "scripts": {
+    "compile": "rm -rf ./lib && mkdir lib && babel -d lib/es5 src && babel --no-babelrc --plugins transform-flow-strip-types -d lib/es6 src && cp -r src lib/es6_flow",
+    "docs": "extract-docs --template docs/templates/README.md --output README.md",
+    "build": "npm run lint && npm run flow && npm run compile && npm run test && npm run docs",
+    "travis": "npm run compile && npm run testCovFullExceptMin",
+    "lint": "eslint src",
+    "flow": "flow && test $? -eq 0 -o $? -eq 2",
+    "flowStop": "flow stop",
+    "test": "npm run testCovFull",
+    "testCovFull": "npm run testCovPrepare && npm run testDev && npm run testProd && npm run testMin && npm run testCovReport",
+    "testCovFullExceptMin": "npm run testCovPrepare && npm run testDev && npm run testProd && npm run testCovReport",
+    "testCovFast": "npm run testCovPrepare && npm run testDev && npm run testCovReport",
+    "ava": "ava --watch",
+    "testCovPrepare": "rm -rf ./coverage .nyc_output .nyc_tmp && mkdir .nyc_tmp",
+    "testDev": "cross-env NODE_ENV=development nyc ava && mv .nyc_output/* .nyc_tmp/",
+    "testProd": "cross-env NODE_ENV=production nyc ava && mv .nyc_output/* .nyc_tmp/",
+    "testMin": "cross-env TEST_MINIFIED_LIB=1 nyc ava && mv .nyc_output/* .nyc_tmp/",
+    "testCovReport": "cp .nyc_tmp/* .nyc_output/ && nyc report --reporter=html --reporter=lcov --reporter=text"
+  },
+  "dependencies": {
+    "storyboard-core": "^1.0.0"
+  },
+  "devDependencies": {
+    "ava": "^0.13.0",
+    "babel-cli": "^6.6.5",
+    "babel-core": "^6.7.2",
+    "babel-eslint": "^6.0.0",
+    "babel-plugin-transform-flow-strip-types": "^6.7.0",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-stage-2": "^6.5.0",
+    "cross-env": "^1.0.7",
+    "eslint": "^2.4.0",
+    "eslint-config-airbnb": "^6.2.0",
+    "eslint-plugin-flowtype": "^2.2.2",
+    "eslint-plugin-react": "^4.2.3",
+    "extract-docs": "^1.0.0",
+    "flow-bin": "^0.22.1",
+    "nyc": "^6.1.1"
+  }
 }
