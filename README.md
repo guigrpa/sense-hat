@@ -19,6 +19,13 @@ $ npm install --save sense-hat
 ##### setPixel()
 
 
+## Related
+
+* [teuteuguy/raspberry-sensor-sense-hat](https://github.com/teuteuguy/raspberry-sensor-sense-hat)
+
+* [jhinrichsen/sense-hat-matrix](https://github.com/jhinrichsen/sense-hat-matrix)
+
+
 ## MIT license
 
 Copyright (c) [Guillermo Grau Panea](https://github.com/guigrpa) 2016

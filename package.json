@@ -48,7 +48,9 @@
     "testCovReport": "cp .nyc_tmp/* .nyc_output/ && nyc report --reporter=html --reporter=lcov --reporter=text"
   },
   "dependencies": {
-    "storyboard-core": "^1.0.0"
+    "bluebird": "^3.3.4",
+    "storyboard-core": "^1.0.0",
+    "tinycolor2": "^1.3.0"
   },
   "devDependencies": {
     "ava": "^0.13.0",
