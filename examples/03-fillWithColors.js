@@ -13,4 +13,4 @@ function update() {
   leds.fill(rgb);
 }
 
-setInterval(update, 50);
+setInterval(update, 150);

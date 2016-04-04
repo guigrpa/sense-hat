@@ -23,4 +23,4 @@ function updatePos() {
   }
 }
 
-setInterval(updatePos, 30);
+setInterval(updatePos, 250);

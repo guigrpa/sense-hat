@@ -118,7 +118,6 @@ const specs = {
   dependencies: {
     'storyboard-core': '^1.0.0',
     bluebird: '^3.3.4',
-    tinycolor2: '^1.3.0',
   },
 
   devDependencies: {
@@ -143,6 +142,10 @@ const specs = {
     // Testing
     ava: '^0.13.0',
     nyc: '^6.1.1',
+
+    // For the examples...
+    tinycolor2: '^1.3.0',
+    keypress: '^0.2.1',
   },
 };
 

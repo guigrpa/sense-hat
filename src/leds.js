@@ -2,12 +2,11 @@
 
 import fs from 'fs';
 import { mainStory, chalk } from 'storyboard-core';
+import letters from './letters'
 
 // ===============================================
 // Helpers
 // ===============================================
-let _fbPath = null;
-
 type Buffer = Array<number>;
 type RGBColor = [number, number, number];
 
@@ -54,7 +53,15 @@ function _bufToRgb(buf: Buffer): RGBColor {
 // ===============================================
 // Init
 // ===============================================
+let _fbPath = null;
+const _letters = {};
+
 export function init() {
+  _initFb();
+  _initLetters();
+}
+
+function _initFb() {
   let fb = null;
   let candidates;
   try {
@@ -88,6 +95,16 @@ export function init() {
   }
 }
 
+function _initLetters() {
+  for (const key of Object.keys(letters)) {
+    const letterShape = letters[key];
+    _letters[key] = [];
+    for (let n = 0; n < 64; n += 8) {
+      const line = letterShape.slice(n, n + 8);
+      _letters[key].push(line.split('').map(o => (o === '1' ? 1 : 0)));
+    }
+  }
+}
 
 // ===============================================
 // -- ### LEDs
@@ -169,4 +186,19 @@ export function fill(rgb: RGBColor) {
 
 export function clear() {
   fill(BLACK);
+}
+
+// ===============================================
+// -- #### Write letter
+// ===============================================
+export function setLetter(key: string, options = {}: ?Object) {
+  console.log(options);
+  const letterShape = _letters[key];
+  if (!letterShape) { return; }
+  const col = WHITE;
+  // const col = options.color | WHITE;
+  const letterImg = letterShape.map(line =>
+    line.map(pixel => (pixel ? col : BLACK))
+  );
+  setImage(letterImg);
 }
