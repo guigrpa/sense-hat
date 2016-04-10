@@ -2,10 +2,11 @@
 
 const keypress  = require('keypress');
 const storyboard = require('storyboard-core');
-const sense = require('../lib/es5');
-const leds = sense.leds;
 const mainStory = storyboard.mainStory;
 const chalk     = storyboard.chalk;
+const sense = require('../lib/es5');
+const leds = sense.leds;
+const tinycolor = require('tinycolor2');
 
 leds.clear();
 process.on('SIGINT', () => {
@@ -48,10 +49,23 @@ function onKeyPressed(listener) {
   _keyListeners.push(listener);
 }
 
+
+// ---------------------------------
+// Random color
+// ---------------------------------
+const baseCol = tinycolor('#902323');
+function getRandomColor() {
+  if (Math.random() >= 0.991) return leds.WHITE;
+  const rgbObj = baseCol.spin(Math.random() * 360).toRgb();
+  return [rgbObj.r, rgbObj.g, rgbObj.b];
+}
+
 // ---------------------------------
 // Public API
 // ---------------------------------
 module.exports = {
   initKeys,
   onKeyPressed,
+
+  getRandomColor,
 };
