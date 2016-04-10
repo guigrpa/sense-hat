@@ -2,7 +2,7 @@
 
 import fs from 'fs';
 import { mainStory, chalk } from 'storyboard-core';
-import letters from './letters'
+import letters from './letters';
 
 // ===============================================
 // Helpers
@@ -195,12 +195,22 @@ export function clear() {
 // ===============================================
 // -- #### Write letter
 // ===============================================
-export function setLetter(key: string, options = {}: ?Object) {
+export function setLetter(key: string, options: ?Object) {
+  const letterImg = _getLetterImg(key, options);
+  if (!letterImg) return;
+  setImage(letterImg);
+}
+
+export function getLetterImage(key: string): Array<Array<RGBColor>> {
+  return _getLetterImg(key, WHITE);
+}
+
+function _getLetterImg(key: string, options = {}: ?Object): Array<Array<RGBColor>> {
   const letterShape = _letters[key];
-  if (!letterShape) { return; }
+  if (!letterShape) return null;
   const col = options.color || WHITE;
   const letterImg = letterShape.map(line =>
     line.map(pixel => (pixel ? col : BLACK))
   );
-  setImage(letterImg);
+  return letterImg;
 }
