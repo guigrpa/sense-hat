@@ -12,9 +12,13 @@ type RGBColor = [number, number, number];
 
 export const BLACK = [0, 0, 0];
 export const WHITE = [255, 255, 255];
+export const RED = [255, 0, 0];
+export const GREEN = [0, 255, 0];
+export const BLUE = [0, 0, 255];
+export const PINK = [255, 100, 100];
 
-// const _pos = ((x: number, y: number): number) => 2 * (y * 8 + x);
-const _pos = (x, y) => 2 * (y * 8 + x);
+// const _pos = ((x: number, y: number): number) => 2 * ((7 - y) * 8 + (7 - x));
+const _pos = (x, y) => 2 * ((7 - y) * 8 + (7 - x));
 
 function _checkXY(x: number, y: number) {
   if (x < 0 || x > 7 || y < 0 || y > 7) {
@@ -148,7 +152,7 @@ function _imgToBuf(img: Array<Array<RGBColor>>): Buffer {
   let offset = 0;
   for (let y = 0; y <= 7; y++) {
     for (let x = 0; x <= 7; x++) {
-      buf.writeUInt16LE(_rgbTo16(img[y][x]), offset);
+      buf.writeUInt16LE(_rgbTo16(img[7 - y][7 - x]), offset);
       offset += 2;
     }
   }
@@ -192,11 +196,9 @@ export function clear() {
 // -- #### Write letter
 // ===============================================
 export function setLetter(key: string, options = {}: ?Object) {
-  console.log(options);
   const letterShape = _letters[key];
   if (!letterShape) { return; }
-  const col = WHITE;
-  // const col = options.color | WHITE;
+  const col = options.color || WHITE;
   const letterImg = letterShape.map(line =>
     line.map(pixel => (pixel ? col : BLACK))
   );
