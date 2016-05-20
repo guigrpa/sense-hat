@@ -4,14 +4,18 @@ require('./common');
 const sense = require('../lib/es5');
 const leds = sense.leds;
 
+const COLORS = [
+  [255, 0, 0],
+  [0, 255, 0],
+  [0, 0, 255],
+];
+
 let x = 0;
 let y = 0;
+let idx = 0;
 function updatePos() {
-  const rgb = [
-    50 + Math.random() * 100,
-    50 + Math.random() * 80,
-    180 + Math.random() * 75,
-  ];
+  idx++;
+  const rgb = COLORS[idx % COLORS.length];
   leds.setPixel(x, y, rgb);
   x++;
   if (x > 7) {
@@ -23,4 +27,4 @@ function updatePos() {
   }
 }
 
-setInterval(updatePos, 250);
+setInterval(updatePos, 150);

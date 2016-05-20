@@ -16,7 +16,7 @@ function updatePos() {
   if (y > 7) {
     y = 0;
   }
-  leds.setPixel(x, y, [0, 0, 255]);
+  leds.setPixel(x, y, [255, 0, 0]);
 }
 
 setInterval(updatePos, 250);
