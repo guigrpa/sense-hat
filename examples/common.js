@@ -25,8 +25,10 @@ function initKeys() {
     let letter = null;
     if (key) {
       if (key.ctrl && key.name === 'c') {
+        mainStory.info('letters', 'Closing...')
         process.stdin.pause();
         leds.clear();
+        process.exit();
       } else {
         letter = key.name;
       }
