@@ -146,6 +146,7 @@ const specs = {
     // For the examples...
     tinycolor2: '^1.3.0',
     keypress: '^0.2.1',
+    commander: '2.9.0',
   },
 };
 
