@@ -34,8 +34,21 @@ function invalidMovement() {
   }, 800);
 }
 
-h.initKeys();
-h.onKeyPressed((letter) => {
+function isLegal(x, y) {
+  // Out of bounds?
+  if (x > 7 || x < 0 || y > 7 || y < 0) return false;
+
+  // Biting itself?
+  for (let i = 1; i < SNAKE_LENGTH; i++) {
+    if (snake[i][0] === x && snake[i][1] === y) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function calcNewPosition(letter) {
   const x0 = snake[0][0];
   const y0 = snake[0][1];
   let x = x0;
@@ -47,16 +60,23 @@ h.onKeyPressed((letter) => {
     case 'RIGHT': x++; break;
     default: return;
   }
+  return [x, y];
+}
 
-  // Out of bounds?
-  if (x > 7 || x < 0 || y > 7 || y < 0) {
-    invalidMovement();
-    return;
-  }
+h.initKeys();
+h.onKeyPressed((letter) => {
+  let tempPos = calcNewPosition(letter);
+  if (!tempPos) return;
+  let x = tempPos[0];
+  let y = tempPos[1];
 
-  // Biting itself?
-  for (let i = 1; i < SNAKE_LENGTH; i++) {
-    if (snake[i][0] === x && snake[i][1] === y) {
+  if (!isLegal(x, y)) {
+    snake.reverse();
+    tempPos = calcNewPosition(letter);
+    x = tempPos[0];
+    y = tempPos[1];
+    if (!isLegal(x, y)) {
+      snake.reverse();
       invalidMovement();
       return;
     }
